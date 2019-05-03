@@ -1,0 +1,26 @@
+{
+  "name": "hca_rest",
+  "version": "1.0.0",
+  "description": "wires up a webserver on simple rest paths, to automate the HCA system",
+  "main": "www.js",
+  "scripts": {
+    "start": "set DEBUG= & node www.js",
+    "watch": "set DEBUG=App*, proxy:* & nodemon www.js 3200",
+    "test": "./node_modules/.bin/mocha ./tests/**/*.spec.js"
+  },
+  "author": "Jason McBurney",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "debug": "^4.1.1",
+    "express": "^4.16.4",
+    "hca-proxy": "^0.1.0",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.0",
+    "sinon": "^7.3.2"
+  }
+}
