@@ -31,6 +31,7 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+server.on('close', onClose);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -86,5 +87,10 @@ function onListening() {
     ? 'pipe: ' + addr
     : 'port: ' + addr.port;
   log(chalk.green(`Server is listening on [${chalk.white(bind)}]`));
+  app.onConnect();
 }
 
+function onClose() {    
+    app.onClose();
+  }
+  

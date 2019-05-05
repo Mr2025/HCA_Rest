@@ -8,23 +8,31 @@ const log = debug('proxy:Flag');
 
 //Source ======================================================================
 class Flag{
-    constructor (){ 
+    constructor (hca){ 
         /* Use Inversion of control, and injection here*/
         log(`Flag:Consructing`);
+        this.hca = hca;
+        //console.dir(hca);
     }
 
     processPost(req,res){
         const flag = req.params.flag;
-		const value = req.params.value;
-		
+		const value = req.params.value;        
+
         log(`Flag:processPost Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(value)}]`);
+        
+        this.hca.flagSet(flag,value);
+
         res.send({flag:flag,value:value});
     }
     processGet(req,res){
         const flag = req.params.flag;
 		
-        log(`Flag:processPost Flag:[${chalk.blue(flag)}]`);
-        res.send({flag:flag,value:'100'});
+        log(`Flag:processPost Flag:[${chalk.blue(flag)}]`);        
+        res.send({
+            flag:flag,
+            value:this.hca.flagGet(flag)
+        });
     }
 }//END Class
 

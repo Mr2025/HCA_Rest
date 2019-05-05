@@ -4,6 +4,8 @@
 
 const express = require('express');
 const router = express.Router();
+const hcaProxy = require('hca-proxy');
+const hca = hcaProxy('hca-rest-client',null,0x00FF);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ROUTE ENDPOINTS
@@ -15,14 +17,24 @@ const DeviceRoute = require('./routes/device.js');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WEB ROUTES
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const flag = new FlagRoute();
-const device = new DeviceRoute();
+const flag = new FlagRoute(hca);
+const device = new DeviceRoute(hca);
 //router.get  ('/',                           (req,res,next)=>{});						// Noop @ home path
-router.get  ('/flag/:flag',                 flag.processGet); 						    // GetFlag with name (:flag)
-router.post ('/flag/:flag/:value',          flag.processPost);						    // postFlag with value(:value)
+router.get  ('/flag/:flag',                 flag.processGet.bind(flag)); 						    // GetFlag with name (:flag)
+router.post ('/flag/:flag/:value',          flag.processPost.bind(flag));						    // postFlag with value(:value)
 
-router.get  ('/device/:device',             device.processGet); 						// GetDevice with name (:flag)
-router.post ('/device/:device/:value',      device.processPost);						// postDevice with value(:value)
+router.get  ('/device/:device',             device.processGet.bind(device)); 						// GetDevice with name (:flag)
+router.post ('/device/:device/:value',      device.processPost.bind(device));						// postDevice with value(:value)
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// EVENT Handlers
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.onConnect = ()=>{
+    //console.trace();
+    hca.openServer(process.env.HCA_SERVER_IP,process.env.HCA_SERVER_PORT);
+}
+router.onClose = ()=>{
+    //console.trace();
+    hca.closeServer();
+}
 module.exports = router;
