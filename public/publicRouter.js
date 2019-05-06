@@ -20,6 +20,8 @@ const DeviceRoute = require('./routes/device.js');
 const flag = new FlagRoute(hca);
 const device = new DeviceRoute(hca);
 //router.get  ('/',                           (req,res,next)=>{});						// Noop @ home path
+router.get  ('/fhem/:flag',                 flag.processFhem.bind(flag)); 						    // SetFlag with Fhem Syntax [EgiGeoZone] 
+
 router.get  ('/flag/:flag',                 flag.processGet.bind(flag)); 						    // GetFlag with name (:flag)
 router.post ('/flag/:flag/:value',          flag.processPost.bind(flag));						    // postFlag with value(:value)
 

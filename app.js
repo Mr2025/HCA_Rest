@@ -2,6 +2,7 @@
 // EXPRESS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const express = require('express');
+const bodyParser = require('body-parser');
 const indexRouter = require('./public/publicRouter');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,6 +20,12 @@ const log = debug('App');
 const server = express();  
 log('Installing Morgan (callTracking)');
 server.use(logger('dev'));                   
+
+log('Installing BodyParser(for QueryString)');
+server.use(bodyParser.urlencoded({ extended: false }));  
+
+log('Installing BodyParser(forJSON data)');
+server.use(bodyParser.json());  
 
 log('Installing Public Router');
 server.use('/', indexRouter);

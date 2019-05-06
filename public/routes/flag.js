@@ -15,6 +15,31 @@ class Flag{
         //console.dir(hca);
     }
 
+
+    processFhem(req,res){
+        //NOTE: https://www.egigeozone.de/manual/default.html 
+        const flag = req.params.flag;
+        const name = req.query.name;
+        const isEnter = (req.query.entry == '1');
+        const isExit = (req.query.entry == '0');		
+
+        let value = null;
+
+        if (isEnter){
+            value = name;
+        }
+
+        if (isExit){
+            value ="Unknown";
+        }
+        
+        log(`Flag:processFhem Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(value)}] isEnter:[${chalk.blue(isEnter)}] isExit:[${chalk.blue(isExit)}]`);
+
+        this.hca.flagSet(flag,name);
+
+        res.send({flag:flag,value:value});
+    }
+
     processPost(req,res){
         const flag = req.params.flag;
 		const value = req.params.value;        
