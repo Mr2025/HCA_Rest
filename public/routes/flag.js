@@ -17,17 +17,21 @@ class Flag{
 
     processOwn(req,res){        
         const flag = req.params.flag;        
-        
+        const name = req.body.desc;  
+        const type = req.body._type;  
+
         console.dir(req.query);
         console.dir(req.body);
         console.dir(req.params);
         
-        const name = req.body.desc;  
-        const type = req.body._type;  
-        
-        log(`Flag:processOwn Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(name)}] _type:[${type}]`);
+        log(`Flag:processOwn Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(name)}] _type:[${chalk.blue(type)}]`);
 
-        this.hca.flagSet(flag,name);
+        if (type === 'location'){
+            const region = req.body.inregions;  
+            if (region.length>0 ){
+                this.hca.flagSet(flag,region[0]);
+            }
+        }
         
         res.send({flag:flag,value:name});
 
