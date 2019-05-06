@@ -24,17 +24,25 @@ class Flag{
         console.dir(req.body);
         console.dir(req.params);
         
-        log(`Flag:processOwn Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(name)}] _type:[${chalk.blue(type)}]`);
-
-        if (type === 'location'){
-            const region = req.body.inregions;  
-            if (region.length>0 ){
-                this.hca.flagSet(flag,region[0]);
-            }
+        switch (type) {
+            case 'location':
+                const region = req.body.inregions;  
+                const value = region[0];
+                log(`Flag:processOwn Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(value)}] _type:[${chalk.blue(type)}]`);
+                if (region.length>0 ){
+                    this.hca.flagSet(flag,value);
+                    res.send({flag:flag,value:value});
+                }
+                break;
+            case 'waypoint':
+                    log(`Flag:processOwn Ignoring Message type:[${chalk.blue(type)}]`);
+                    res.status(405);
+                break;
+            default:
+                res.status(501);
+                break;
         }
-        
-        res.send({flag:flag,value:name});
-
+        return;
     }
 
     processFhem(req,res){
