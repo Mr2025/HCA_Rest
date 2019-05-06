@@ -15,6 +15,23 @@ class Flag{
         //console.dir(hca);
     }
 
+    processOwn(req,res){        
+        const flag = req.params.flag;        
+        
+        console.dir(req.query);
+        console.dir(req.body);
+        console.dir(req.params);
+        
+        const name = req.body.desc;  
+        const type = req.body._type;  
+        
+        log(`Flag:processOwn Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(name)}] _type:[${type}]`);
+
+        this.hca.flagSet(flag,name);
+        
+        res.send({flag:flag,value:name});
+
+    }
 
     processFhem(req,res){
         //NOTE: https://www.egigeozone.de/manual/default.html 
