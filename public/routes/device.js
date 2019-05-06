@@ -27,7 +27,7 @@ class Device{
     processGet(req,res){
         const device = req.params.device;
 		
-        log(`Device:processPost Device:[${chalk.blue(device)}]`);
+        log(`Device:processGet Device:[${chalk.blue(device)}]`);
         
         res.send({
             device:device,

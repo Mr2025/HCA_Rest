@@ -28,7 +28,7 @@ class Flag{
     processGet(req,res){
         const flag = req.params.flag;
 		
-        log(`Flag:processPost Flag:[${chalk.blue(flag)}]`);        
+        log(`Flag:processGet Flag:[${chalk.blue(flag)}]`);        
         res.send({
             flag:flag,
             value:this.hca.flagGet(flag)

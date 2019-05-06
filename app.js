@@ -26,7 +26,8 @@ server.use('/', indexRouter);
 log('Installing InternetSite 404');  
 // catch 404 and forward to error handler
 server.use(function(req, res, next) {
-next(createError(404));
+    console.dir(req, {depth:10})
+    next(createError(404));
 });
 
 
