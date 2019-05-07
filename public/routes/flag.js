@@ -47,7 +47,7 @@ class Flag{
                 }
                 res.status(200).json({success:'success'});
                 break;
-            case 'waypoint':
+            case 'waypoint': 
             case 'waypoints':
                     log(`Flag:processOwn Ignoring Message type:[${chalk.blue(type)}]`);
                     res.status(200).json({success:'success'});
