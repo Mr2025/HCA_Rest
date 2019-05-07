@@ -27,9 +27,9 @@ class Flag{
         switch (type) {
             case 'location':
                 const region = req.body.inregions;  
-                const value = (region)?region[0]:null;
+                const value = (region && region.length>0)?region[0]:null;
                 log(`Flag:processOwn Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(value)}] _type:[${chalk.blue(type)}]`);
-                if (region.length>0 ){
+                if (value){
                     this.hca.flagSet(flag,value);                    
                 }else{
                     this.hca.flagSet(flag,"Unknown");
