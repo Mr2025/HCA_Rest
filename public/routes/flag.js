@@ -34,22 +34,22 @@ class Flag{
                 }else{
                     this.hca.flagSet(flag,"Unknown");
                 }
-                res.status(200);
+                res.status(200).json({success:'success'});
                 break;
             case 'transition':
                 const zone = req.body.desc;  
                 const isEnter = req.body.event === 'enter';  
-                log(`Flag:processOwn Trasition Event Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(zone)}] regionChange:[${req.body.event}] _type:[${chalk.blue(type)}]`);
+                log(`Flag:processOwn Trasition Event Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(zone)}] regionChange:[${chalk.blue(req.body.event)}] _type:[${chalk.blue(type)}]`);
                 if (isEnter){
                     this.hca.flagSet(flag,zone);                    
                 }else{
                     this.hca.flagSet(flag,"Unknown");
                 }
-                res.status(200);
+                res.status(200).json({success:'success'});
                 break;
             case 'waypoint':
                     log(`Flag:processOwn Ignoring Message type:[${chalk.blue(type)}]`);
-                    res.status(405);
+                    res.status(200).json({success:'success'});
                 break;
             default:
                 res.status(501);
