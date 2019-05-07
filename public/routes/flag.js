@@ -28,13 +28,24 @@ class Flag{
             case 'location':
                 const region = req.body.inregions;  
                 const value = (region && region.length>0)?region[0]:null;
-                log(`Flag:processOwn Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(value)}] _type:[${chalk.blue(type)}]`);
+                log(`Flag:processOwn LocationUpdate Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(value)}] _type:[${chalk.blue(type)}]`);
                 if (value){
                     this.hca.flagSet(flag,value);                    
                 }else{
                     this.hca.flagSet(flag,"Unknown");
                 }
-                res.send({flag:flag,value:value});
+                res.status(200);
+                break;
+            case 'transition':
+                const region = req.body.desc;  
+                const isEnter = req.body.event === 'enter';  
+                log(`Flag:processOwn Trasition Event Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(region)}] regionChange:[${req.body.event}] _type:[${chalk.blue(type)}]`);
+                if (isEnter){
+                    this.hca.flagSet(flag,region);                    
+                }else{
+                    this.hca.flagSet(flag,"Unknown");
+                }
+                res.status(200);
                 break;
             case 'waypoint':
                     log(`Flag:processOwn Ignoring Message type:[${chalk.blue(type)}]`);
