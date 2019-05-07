@@ -37,11 +37,11 @@ class Flag{
                 res.status(200);
                 break;
             case 'transition':
-                const region = req.body.desc;  
+                const zone = req.body.desc;  
                 const isEnter = req.body.event === 'enter';  
-                log(`Flag:processOwn Trasition Event Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(region)}] regionChange:[${req.body.event}] _type:[${chalk.blue(type)}]`);
+                log(`Flag:processOwn Trasition Event Flag:[${chalk.blue(flag)}] Value:[${chalk.blue(zone)}] regionChange:[${req.body.event}] _type:[${chalk.blue(type)}]`);
                 if (isEnter){
-                    this.hca.flagSet(flag,region);                    
+                    this.hca.flagSet(flag,zone);                    
                 }else{
                     this.hca.flagSet(flag,"Unknown");
                 }
